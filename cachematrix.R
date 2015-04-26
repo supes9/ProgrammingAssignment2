@@ -9,7 +9,9 @@ makeCacheMatrix <- function(x = matrix()) {
       x<<-y
       m<<-NULL
     }
+  get<-function()x
   setmatrix<-function(solve) m<<-solve
+  getmatrix<-function()m
   
   list(set = set,
        get = get,
@@ -24,12 +26,15 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
 
+  m <- x$getmatrix()
   
   if(!is.null(m)){
     message("getting the cached matrix")
     return(m)
   }
 
+  matrix <- x$get()
+  m <- solve(matrix, ...)
   x$setmean(m)
   m
 }
